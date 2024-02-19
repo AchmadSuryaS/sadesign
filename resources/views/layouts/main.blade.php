@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{ $title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <style>
@@ -18,10 +19,10 @@
     }
 </style>
 
-<body>
-    <nav class="bg-primary">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+<body class="font-poppins">
+    <nav class="bg-primary max-w-screen-2xl mx-auto">
+        <div class="max-w-screen-lg mx-auto flex flex-wrap items-center justify-between p-4">
+            <a href="{{ route('welcome') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <span class="text-2xl font-semibold text-white">SADESIGN</span>
             </a>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -36,20 +37,29 @@
                     </button>
                     <div id="dropdown" class="z-10 hidden bg-white rounded-lg shadow w-44">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            @if (Auth::user()->role_id == 1)
+                                <li>
+                                    <a href="/dashboard">
+                                        <button
+                                            class="w-full block px-4 py-2 font-semibold text-primary hover:bg-secondary hover:text-white">Dashboard</button>
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <form action="/logout" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full block px-4 py-2 font-semibold text-primary hover:bg-secondary">Log Out
+                                        class="w-full block px-4 py-2 font-semibold text-primary hover:bg-secondary hover:text-white">Log Out
                                     </button>
                                 </form>
                             </li>
+
                         </ul>
                     </div>
                 @else
                     <a href="/login">
                         <button type="button"
-                            class="text-white bg-primary border-2 border-white hover:bg-white hover:text-primary font-bold text-sm px-4 py-2 text-center">Log
+                            class="text-white bg-primary rounded-full border-2 border-white hover:bg-white hover:text-primary font-bold text-sm px-4 py-2 text-center">Log
                             In</button>
                     </a>
                 @endauth
@@ -68,20 +78,16 @@
                 <ul
                     class="flex flex-col font-medium p-4 md:p-0 mt-4 bg-white md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-primary">
                     <li>
-                        <a href="/"
-                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Beranda</a>
+                        <a href="{{ route('welcome') }}"
+                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Home</a>
                     </li>
                     <li>
-                        <a href="/about"
-                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Tentang</a>
+                        <a href="{{ route('services') }}"
+                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Services</a>
                     </li>
                     <li>
-                        <a href="/product"
-                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Produk</a>
-                    </li>
-                    <li>
-                        <a href="/contact"
-                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Kontak</a>
+                        <a href="{{ route('contact') }}"
+                            class="block py-2 px-3 md:p-0 text-primary md:text-white hover:text-secondary rounded md:bg-transparent">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -90,8 +96,8 @@
 
     @yield('container')
 
-    <footer class="bg-primary text-white">
-        <div class="mx-auto p-4">
+    <footer class="bg-primary text-white max-w-screen-2xl mx-auto">
+        <div class="mx-auto p-4 max-w-screen-lg">
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm sm:text-center">© 2023 <a href="/" class="hover:underline">Sadesign</a>. All
                     Rights Reserved.

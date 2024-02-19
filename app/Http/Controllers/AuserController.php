@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class AuserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('register', [
-            'title' => 'SADESIGN | Register'
+        $users = User::Paginate(5);
+
+        return view('a-user', [
+            'title' => 'Dashboard | A-user',
+            'users' => $users
         ]);
     }
 
@@ -23,7 +25,7 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        //
+      //
     }
 
     /**
@@ -31,20 +33,7 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' =>'required|max:225',
-            'email' =>'required|max:225|email',
-            'username' =>'required|max:225|min:3|unique:users',
-            'password' =>'required|max:225|min:3',
-        ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-
-        $validated['role_id'] = 2;
-
-        User::create($validated);
-
-        return redirect('/login')->with('success', 'Register successfull! Please Login');
+        //
     }
 
     /**
@@ -60,7 +49,12 @@ class RegisterController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('e-user', [
+            'title' => 'Dashboard | E-user',
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -68,7 +62,11 @@ class RegisterController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update($request->all());
+
+        return redirect('/dashboard/a-user');
     }
 
     /**
@@ -76,6 +74,10 @@ class RegisterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect('/dashboard/a-user');
     }
 }
