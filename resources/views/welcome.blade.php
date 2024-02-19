@@ -4,7 +4,7 @@
     <section class="py-24 bg-white">
         <div class="w-full md:text-center max-w-screen-lg mx-auto p-5">
             <h1
-                class="mb-8 text-4xl font-extrabold leading-none tracking-normal text-primary md:text-6xl md:tracking-tight">
+                class="mb-8 text-4xl font-extrabold tracking-normal text-primary md:text-6xl md:tracking-tight">
                 Designing Dream Into Reality
             </h1>
             <p class="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
